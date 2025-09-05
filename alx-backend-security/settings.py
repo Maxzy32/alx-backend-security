@@ -76,6 +76,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
+CELERY_BEAT_SCHEDULE = {
+    "detect_anomalies_hourly": {
+        "task": "ip_tracking.tasks.detect_anomalies",
+        "schedule": 3600.0,  # 1 hour
+    },
+}
+
+
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 

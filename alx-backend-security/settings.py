@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
       "ip_tracking",
+        "ratelimit",
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
+
+RATELIMIT_ENABLE = True
+RATELIMIT_VIEW = "ratelimit.exceptions.Ratelimited"  # optional custom handler
+
 
 TEMPLATES = [
     {

@@ -129,7 +129,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+DEBUG = False
+ALLOWED_HOSTS = ["your-app-name.onrender.com"]  # Replace with your Render domain
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Security headers (optional but recommended)
+CSRF_TRUSTED_ORIGINS = ["https://your-app-name.onrender.com"]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

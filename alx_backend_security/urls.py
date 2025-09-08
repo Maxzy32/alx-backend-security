@@ -26,5 +26,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("ip_tracking.urls")),  # include your app urls
+    path("", include("landing.urls")),   # 🌟 Root URL points to landing
+    path("ip/", include("ip_tracking.urls")),  # keep your IP tracking endpoints
 ]

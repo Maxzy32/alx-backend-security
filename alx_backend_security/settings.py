@@ -158,13 +158,191 @@
 
 # DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
+
+
+
+
+# ******************************************
+
+
+# """
+# Django settings for alx_backend_security project.
+# """
+
+# import os
+# from pathlib import Path
+# import sys
+
+# # --------------------------------------------------
+# # Paths
+# # --------------------------------------------------
+# BASE_DIR = Path(__file__).resolve().parent.parent
+
+# # --------------------------------------------------
+# # Security
+# # --------------------------------------------------
+# SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-secret-key")
+# DEBUG = os.getenv("DEBUG", "False").lower() in ["true", "1"]
+
+# ALLOWED_HOSTS = [
+#     "alx-backend-security-1.onrender.com",  # check your actual Render subdomain
+#     "localhost",
+#     "127.0.0.1",
+# ]
+
+
+# # --------------------------------------------------
+# # Applications
+# # --------------------------------------------------
+# INSTALLED_APPS = [
+#     "django.contrib.admin",
+#     "django.contrib.auth",
+#     "django.contrib.contenttypes",
+#     "django.contrib.sessions",
+#     "django.contrib.messages",
+#     "django.contrib.staticfiles",
+
+#     # Local apps
+#     "ip_tracking",
+#     "landing",
+
+#     # Third-party apps
+#     "django_ratelimit",
+#     "rest_framework",
+#     "drf_yasg",
+# ]
+
+
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "handlers": {
+#         "console": {
+#             "class": "logging.StreamHandler",
+#             "stream": sys.stdout,
+#         },
+#     },
+#     "root": {
+#         "handlers": ["console"],
+#         "level": "DEBUG",
+#     },
+# }
+
+
+# MIDDLEWARE = [
+#     "django.middleware.security.SecurityMiddleware",
+#     "whitenoise.middleware.WhiteNoiseMiddleware",  # static files
+#     "django.contrib.sessions.middleware.SessionMiddleware",
+#     "django.middleware.common.CommonMiddleware",
+#     "django.middleware.csrf.CsrfViewMiddleware",
+#     "django.contrib.auth.middleware.AuthenticationMiddleware",
+#     "django.contrib.messages.middleware.MessageMiddleware",
+#     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+#     "ip_tracking.middleware.IPLoggingMiddleware",
+# ]
+
+# ROOT_URLCONF = "alx_backend_security.urls"
+
+# # --------------------------------------------------
+# # Templates
+# # --------------------------------------------------
+# TEMPLATES = [
+#     {
+#         "BACKEND": "django.template.backends.django.DjangoTemplates",
+#         "DIRS": [BASE_DIR / "templates"],  # global templates folder
+#         "APP_DIRS": True,
+#         "OPTIONS": {
+#             "context_processors": [
+#                 "django.template.context_processors.debug",
+#                 "django.template.context_processors.request",
+#                 "django.contrib.auth.context_processors.auth",
+#                 "django.contrib.messages.context_processors.messages",
+#             ],
+#         },
+#     },
+# ]
+
+# WSGI_APPLICATION = "alx_backend_security.wsgi.application"
+
+# # --------------------------------------------------
+# # Database
+# # --------------------------------------------------
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+# # ⚡️ If you later switch to Postgres on Render:
+# # DATABASES = {
+# #     "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
+# # }
+
+# # --------------------------------------------------
+# # Cache / Redis
+# # --------------------------------------------------
+# REDIS_URL = os.getenv("REDIS_URL", "redis://127.0.0.1:6379/1")
+
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": REDIS_URL,
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         },
+#     }
+# }
+
+# # --------------------------------------------------
+# # Celery
+# # --------------------------------------------------
+# CELERY_BROKER_URL = os.getenv("REDIS_URL", "redis://127.0.0.1:6379/0")
+# CELERY_BEAT_SCHEDULE = {
+#     "detect-anomalies-hourly": {
+#         "task": "ip_tracking.tasks.detect_anomalies",
+#         "schedule": 3600.0,  # every 1 hour
+#     },
+# }
+
+# # --------------------------------------------------
+# # Password Validation
+# # --------------------------------------------------
+# AUTH_PASSWORD_VALIDATORS = [
+#     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+#     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+#     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+#     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+# ]
+
+# # --------------------------------------------------
+# # Internationalization
+# # --------------------------------------------------
+# LANGUAGE_CODE = "en-us"
+# TIME_ZONE = "UTC"
+# USE_I18N = True
+# USE_TZ = True
+
+# # --------------------------------------------------
+# # Static Files
+# # --------------------------------------------------
+# STATIC_URL = "static/"
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+# # --------------------------------------------------
+# # Default PK
+# # --------------------------------------------------
+# DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
 """
 Django settings for alx_backend_security project.
 """
 
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # --------------------------------------------------
 # Paths
@@ -205,7 +383,9 @@ INSTALLED_APPS = [
     "drf_yasg",
 ]
 
-
+# --------------------------------------------------
+# Logging
+# --------------------------------------------------
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -221,10 +401,12 @@ LOGGING = {
     },
 }
 
-
+# --------------------------------------------------
+# Middleware
+# --------------------------------------------------
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # static files
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # serve static files
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -267,6 +449,7 @@ DATABASES = {
     }
 }
 # ⚡️ If you later switch to Postgres on Render:
+# import dj_database_url
 # DATABASES = {
 #     "default": dj_database_url.config(default=os.getenv("DATABASE_URL"))
 # }
@@ -318,8 +501,9 @@ USE_TZ = True
 # --------------------------------------------------
 # Static Files
 # --------------------------------------------------
-STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # --------------------------------------------------
 # Default PK

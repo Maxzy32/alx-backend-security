@@ -458,9 +458,12 @@ DATABASES = {
 # Cache / Redis
 # --------------------------------------------------
 # Default to local Redis if REDIS_URL is not set
+# --------------------------------------------------
+# Cache / Redis
+# --------------------------------------------------
 REDIS_URL = os.getenv(
     "REDIS_URL",
-    "rediss://:a96jGRbmsEJIPS9RkWtvWDAF00g6WHa0@redis-15734.c89.us-east-1-3.ec2.redns.redis-cloud.com:15734/0"
+    "redis://:a96jGRbmsEJIPS9RkWtvWDAF00g6WHa0@redis-15734.c89.us-east-1-3.ec2.redns.redis-cloud.com:15734/0"
 )
 
 CACHES = {
@@ -472,6 +475,10 @@ CACHES = {
         },
     }
 }
+
+# Celery
+CELERY_BROKER_URL = REDIS_URL
+
 
 # --------------------------------------------------
 # Celery

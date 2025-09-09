@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-8js=ty2kbek&4()m3hr=a9q=2u#jc(wjdu*54b^@tjj9@x59w=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False 
 
-ALLOWED_HOSTS = ["*", "your-app.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["*", "alx_backend_security.onrender.com", "localhost", "127.0.0.1"]
   # or ["your-app.onrender.com"]
 
 
@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "ip_tracking",
     "django_ratelimit",   # ← important: use correct app label
     'landing',
+    "rest_framework",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [

@@ -164,6 +164,7 @@ Django settings for alx_backend_security project.
 
 import os
 from pathlib import Path
+import sys
 
 # --------------------------------------------------
 # Paths
@@ -203,6 +204,23 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_yasg",
 ]
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "stream": sys.stdout,
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG",
+    },
+}
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

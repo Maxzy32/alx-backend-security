@@ -457,7 +457,11 @@ DATABASES = {
 # --------------------------------------------------
 # Cache / Redis
 # --------------------------------------------------
-REDIS_URL = os.getenv("REDIS_URL", "redis://127.0.0.1:6379/1")
+# Default to local Redis if REDIS_URL is not set
+REDIS_URL = os.getenv(
+    "REDIS_URL",
+    "rediss://:a96jGRbmsEJIPS9RkWtvWDAF00g6WHa0@redis-15734.c89.us-east-1-3.ec2.redns.redis-cloud.com:15734/0"
+)
 
 CACHES = {
     "default": {
@@ -472,7 +476,7 @@ CACHES = {
 # --------------------------------------------------
 # Celery
 # --------------------------------------------------
-CELERY_BROKER_URL = os.getenv("REDIS_URL", "redis://127.0.0.1:6379/0")
+CELERY_BROKER_URL = REDIS_URL
 CELERY_BEAT_SCHEDULE = {
     "detect-anomalies-hourly": {
         "task": "ip_tracking.tasks.detect_anomalies",

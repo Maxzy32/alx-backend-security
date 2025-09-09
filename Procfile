@@ -1,1 +1,1 @@
-web: gunicorn alx_backend_security.wsgi:application --log-file -
+web: gunicorn alx_backend_security.wsgi:application

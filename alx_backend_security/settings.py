@@ -463,7 +463,7 @@ DATABASES = {
 # --------------------------------------------------
 REDIS_URL = os.getenv(
     "REDIS_URL",
-    "rediss://:a96jGRbmsEJIPS9RkWtvWDAF00g6WHa0@redis-15734.c89.us-east-1-3.ec2.redns.redis-cloud.com:15734/0"
+    "redis://:a96jGRbmsEJIPS9RkWtvWDAF00g6WHa0@redis-15734.c89.us-east-1-3.ec2.redns.redis-cloud.com:15734/0"
 )
 
 CACHES = {
@@ -472,7 +472,6 @@ CACHES = {
         "LOCATION": REDIS_URL,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "CONNECTION_POOL_KWARGS": {"ssl_cert_reqs": None},  # Disable SSL cert check if needed
         }
     }
 }

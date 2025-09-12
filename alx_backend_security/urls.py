@@ -42,5 +42,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("landing.urls")),   # 🌟 Root URL points to landing
     path("ip/", include("ip_tracking.urls")),  # keep your IP tracking endpoints
-     path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
+    path("api/", include("landing.api_urls")), 
+    path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
 ]

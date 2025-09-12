@@ -339,7 +339,7 @@
 """
 Django settings for alx_backend_security project.
 """
-
+import dj_database_url
 import os
 import sys
 from pathlib import Path
@@ -381,6 +381,7 @@ INSTALLED_APPS = [
     "django_ratelimit",
     "rest_framework",
     "drf_yasg",
+    "corsheaders",
 ]
 
 # --------------------------------------------------
@@ -414,9 +415,11 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "ip_tracking.middleware.IPLoggingMiddleware",
+    "corsheaders.middleware.CorsMiddleware"
 ]
 
 ROOT_URLCONF = "alx_backend_security.urls"
+CORS_ALLOW_ALL_ORIGINS = True
 
 # --------------------------------------------------
 # Templates
@@ -439,15 +442,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "alx_backend_security.wsgi.application"
 
-# --------------------------------------------------
-# Database
-# --------------------------------------------------
+
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "alx_travel_app",
+#         "USER": "alx_user",
+#         "PASSWORD": "root",
+#         "HOST": "localhost",
+#         "PORT": "5432",
+#     }
+# }
+
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(
+        default=os.getenv(
+            "DATABASE_URL",
+            "postgresql://alx_user:root@localhost:5432/alx_travel_app"  # fallback for local dev
+        )
+    )
 }
+
+
+
+
 # ⚡️ If you later switch to Postgres on Render:
 # import dj_database_url
 # DATABASES = {

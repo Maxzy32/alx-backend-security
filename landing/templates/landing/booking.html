@@ -1,0 +1,169 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Airbnb Clone - ALX Travel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; }
+    .hero {
+      background: url("https://source.unsplash.com/1600x600/?travel,airbnb") no-repeat center center/cover;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    }
+    .listing-card {
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .listing-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    .price { font-weight: bold; font-size: 1.2rem; color: #e74c3c; }
+    footer {
+      background: #222; color: white; padding: 20px; text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-danger" href="#">Airbnb Clone</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#listings">Homes</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="text-center">
+      <h1 class="display-3">Find Your Perfect Stay</h1>
+      <p class="lead">Book unique homes and experiences with us</p>
+    </div>
+  </header>
+
+  <!-- Listings -->
+  <section id="listings" class="container py-5">
+    <h2 class="mb-4 text-center">Featured Listings</h2>
+    <div class="row" id="listings-container">
+      <!-- Listings will be dynamically loaded here -->
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="bg-light py-5">
+    <div class="container text-center">
+      <h2>Contact Us</h2>
+      <p>Need help? Reach out anytime.</p>
+      <a href="mailto:support@example.com" class="btn btn-danger">Email Support</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 ALX Travel | Built with ❤️ in Django</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Fetch listings from Django backend
+    async function fetchListings() {
+      const res = await fetch("http://127.0.0.1:8000/api/listings/");
+      const listings = await res.json();
+      const container = document.getElementById("listings-container");
+
+      listings.forEach(listing => {
+        const card = `
+          <div class="col-md-4 mb-4">
+            <div class="card listing-card">
+              <img src="${listing.image_url || `https://source.unsplash.com/400x300/?house,${listing.location}`}" 
+                   class="card-img-top" 
+                   alt="${listing.title}">
+              <div class="card-body">
+                <h5 class="card-title">${listing.title}</h5>
+                <p class="card-text">${listing.description.substring(0,100)}...</p>
+                <p class="price">$${listing.price_per_night} / night</p>
+                <a href="booking.html?id=${listing.id}" class="btn btn-danger w-100">Book Now</a>
+              </div>
+            </div>
+          </div>
+        `;
+        container.innerHTML += card;
+      });
+    }
+
+    fetchListings();
+  </script>
+</body>
+</html> {% endcomment %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking - Airbnb Clone</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; padding-top: 70px; }
+    .booking-card { border-radius: 15px; overflow: hidden; }
+    footer { background: #222; color: white; padding: 20px; text-align: center; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-danger" href="{% url 'home' %}">Airbnb Clone</a>
+    </div>
+  </nav>
+
+  <!-- Booking Section -->
+  <section class="container py-5">
+    <div class="row">
+      <div class="col-md-6">
+        <img src="{% static listing.image %}" class="img-fluid rounded booking-card" alt="{{ listing.title }}">
+      </div>
+      <div class="col-md-6">
+        <h2>{{ listing.title }}</h2>
+        <p>{{ listing.description }}</p>
+        <p><strong>Location:</strong> {{ listing.location }}</p>
+        <p class="text-danger fw-bold">${{ listing.price }} / night</p>
+        <hr>
+        <h4>Book Your Stay</h4>
+        <form method="post" action="{% url 'create_booking' listing.id %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="customerName" class="form-label">Your Name</label>
+            <input type="text" class="form-control" id="customerName" name="customerName" required>
+          </div>
+          <div class="mb-3">
+            <label for="checkIn" class="form-label">Check-in</label>
+            <input type="date" class="form-control" id="checkIn" name="checkIn" required>
+          </div>
+          <div class="mb-3">
+            <label for="checkOut" class="form-label">Check-out</label>
+            <input type="date" class="form-control" id="checkOut" name="checkOut" required>
+          </div>
+          <button type="submit" class="btn btn-danger w-100">Confirm Booking</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 ALX Travel | Built with ❤️ in Django</p>
+  </footer>
+</body>
+</html>

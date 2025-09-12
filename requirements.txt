@@ -10,5 +10,6 @@ django-ratelimit==4.1.0
 setuptools>=65.0.0
 django-redis==5.4.0
 ipinfo==5.2.0
+dj-database-url==0.5.0 
 
 

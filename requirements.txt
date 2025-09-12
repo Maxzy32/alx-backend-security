@@ -12,7 +12,7 @@ django-redis==5.4.0
 ipinfo==5.2.0
 dj-database-url==3.0.1 
 django-cors-headers==4.7.0   # version may differ
-psycopg2-binary>=2.9.10
+psycopg2-binary==2.9.10
 
 
 

@@ -36,8 +36,16 @@ class PaymentSerializer(serializers.ModelSerializer):
 
 class ListingSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True, read_only=True)
+    image_url = serializers.SerializerMethodField()
+
     class Meta:
         model = Listing
-        fields = ["id", "title", "description", "location", "price_per_night",
-                  "is_available", "image_url", "created_at", "reviews"]
+        fields = [
+            "id", "title", "description", "location", "price_per_night",
+            "is_available", "image_url", "created_at", "reviews"
+        ]
         read_only_fields = ["created_at", "reviews"]
+
+    def get_image_url(self, obj):
+        # return a placeholder or actual media URL
+        return obj.image if obj.image else "/static/img/default.jpg"
